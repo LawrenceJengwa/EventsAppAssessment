@@ -32,9 +32,9 @@ class ScheduleViewHolder(private val binding: EventsItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun display(schedule: Schedule, position: Int) {
         binding.apply {
-            eventTitle.text = schedule.title
-            if (schedule.date.let { DateUtil.isToday(it) }) {
-                eventDate.text = binding.eventDate.context.getString(R.string.today)
+            val scheduleEventDate = schedule.date
+            if (scheduleEventDate != null && DateUtil.isToday(scheduleEventDate)) {
+                eventDate.text = "Today${DateUtil.extractTimeFromDate(scheduleEventDate)}"
             } else {
                 eventDate.text = binding.eventDate.context.getString(R.string.yesterday)
             }

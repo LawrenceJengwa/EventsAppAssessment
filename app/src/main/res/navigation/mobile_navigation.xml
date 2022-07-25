@@ -25,5 +25,9 @@
         android:id="@+id/schedule"
         android:name="com.lawrence.eventsapp.ui.schedule.ScheduleFragment"
         android:label="@string/title_schedule"
-        tools:layout="@layout/fragment_schedule" />
+        tools:layout="@layout/fragment_schedule" >
+        <action
+            android:id="@+id/action_schedule_to_events"
+            app:destination="@id/events" />
+    </fragment>
 </navigation>

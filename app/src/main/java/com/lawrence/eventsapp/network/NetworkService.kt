@@ -10,7 +10,7 @@ interface NetworkService {
     suspend fun getAllEvents() : Response<List<Events>>
 
     @Headers("Content-Type: application/json")
-    @GET("schedule.json")
+    @GET("getSchedule")
     suspend fun getSchedule(): Response<List<Schedule>>
 
 }

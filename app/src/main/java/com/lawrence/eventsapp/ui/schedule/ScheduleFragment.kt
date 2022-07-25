@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lawrence.eventsapp.databinding.FragmentEventsBinding
 import com.lawrence.eventsapp.network.NetworkAdapter
 import com.lawrence.eventsapp.network.NetworkRepo
 import com.lawrence.eventsapp.network.Schedule
 import com.lawrence.eventsapp.viewModel.ScheduleViewModel
+import com.lawrence.eventsapp.viewModel.ScheduleViewModelFactory
 import com.lawrence.eventsapp.viewModel.ViewModelFactory
 
 class ScheduleFragment : Fragment() {
@@ -27,7 +30,7 @@ class ScheduleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this, ViewModelFactory(repo)).get(ScheduleViewModel::class.java)
+        viewModel = ViewModelProvider(this, ScheduleViewModelFactory(repo))[ScheduleViewModel::class.java]
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
 
         return binding.root
