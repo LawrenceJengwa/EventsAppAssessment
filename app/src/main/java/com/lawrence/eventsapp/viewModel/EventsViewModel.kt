@@ -1,4 +1,4 @@
-package com.lawrence.eventsapp.ui.events
+package com.lawrence.eventsapp.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import kotlinx.coroutines.*
 class EventsViewModel constructor(private val repo: NetworkRepo): ViewModel() {
 
     private val errorMessage = MutableLiveData<String>()
-    private val eventsList = MutableLiveData<List<Events>>()
+    val eventList = MutableLiveData<List<Events>>()
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
@@ -21,7 +21,7 @@ class EventsViewModel constructor(private val repo: NetworkRepo): ViewModel() {
             val response = repo.getAllEvents()
             withContext(Dispatchers.Main){
                 if (response.isSuccessful){
-                    eventsList.postValue(response.body())
+                    eventList.postValue(response.body())
                     isLoading.value =false
                 } else{
                     onError("Error : ${response.message()}")

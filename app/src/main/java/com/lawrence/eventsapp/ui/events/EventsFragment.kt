@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lawrence.eventsapp.databinding.FragmentEventsBinding
+import com.lawrence.eventsapp.network.Events
+import com.lawrence.eventsapp.network.NetworkAdapter
+import com.lawrence.eventsapp.network.NetworkRepo
+import com.lawrence.eventsapp.viewModel.EventsViewModel
+import com.lawrence.eventsapp.viewModel.ViewModelFactory
 
 
 class EventsFragment : Fragment() {
 
     private var _binding: FragmentEventsBinding? = null
+    private lateinit var viewModel: EventsViewModel
+    private val networkAdapter = NetworkAdapter.getInstance()
+    private val repo = NetworkRepo(networkAdapter)
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,17 +29,29 @@ class EventsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val eventsViewModel =
-            ViewModelProvider(this).get(EventsViewModel::class.java)
-
+        viewModel = ViewModelProvider(this, ViewModelFactory(repo)).get(EventsViewModel::class.java)
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        eventsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpViewModel()
+        viewModel.eventList.observe(viewLifecycleOwner){
+            initAdapter(it)
         }
-        return root
+    }
+
+    private fun initAdapter(eventList: List<Events>) {
+        val eventsAdapter = EventsAdapter(eventList)
+        binding.eventsRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.eventsRecyclerView.adapter = eventsAdapter
+        eventsAdapter.notifyDataSetChanged()
+    }
+
+    private fun setUpViewModel() {
+        viewModel.getAllEvents()
     }
 
     override fun onDestroyView() {

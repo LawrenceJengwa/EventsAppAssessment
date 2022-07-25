@@ -1,13 +1,13 @@
-package com.lawrence.eventsapp.ui.schedule
+package com.lawrence.eventsapp.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ScheduleViewModel : ViewModel() {
-//TODO: implement schedule
+class HomeViewModel : ViewModel() {
+
     private val _text = MutableLiveData<String>().apply {
-        value = "This is Schedule Fragment"
+        value = "This is Events Fragment"
     }
     val text: LiveData<String> = _text
 }

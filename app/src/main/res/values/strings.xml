@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_events">Events</string>
     <string name="title_schedule">Schedule</string>
+    <string name="events_image">Events Image</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>
