@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lawrence.eventsapp.databinding.FragmentEventsBinding
+import com.lawrence.eventsapp.databinding.FragmentScheduleBinding
 import com.lawrence.eventsapp.network.NetworkAdapter
 import com.lawrence.eventsapp.network.NetworkRepo
 import com.lawrence.eventsapp.network.Schedule
@@ -18,7 +19,7 @@ import com.lawrence.eventsapp.viewModel.ScheduleViewModelFactory
 import com.lawrence.eventsapp.viewModel.ViewModelFactory
 
 class ScheduleFragment : Fragment() {
-    private var _binding: FragmentEventsBinding? = null
+    private var _binding: FragmentScheduleBinding? = null
     private lateinit var viewModel: ScheduleViewModel
     private val networkAdapter = NetworkAdapter.getInstance()
     private val repo = NetworkRepo(networkAdapter)
@@ -31,7 +32,7 @@ class ScheduleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewModel = ViewModelProvider(this, ScheduleViewModelFactory(repo))[ScheduleViewModel::class.java]
-        _binding = FragmentEventsBinding.inflate(inflater, container, false)
+        _binding = FragmentScheduleBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -46,8 +47,8 @@ class ScheduleFragment : Fragment() {
 
     private fun initAdapter(scheduleList: List<Schedule>) {
         val scheduleAdapter = ScheduleAdapter(scheduleList)
-        binding.eventsRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.eventsRecyclerView.adapter = scheduleAdapter
+        binding.scheduleRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.scheduleRecyclerView.adapter = scheduleAdapter
         scheduleAdapter.notifyDataSetChanged()
     }
 
