@@ -1,5 +1,6 @@
 package com.lawrence.eventsapp.viewModel
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.lawrence.eventsapp.network.Events
 import com.lawrence.eventsapp.network.NetworkRepo
@@ -11,6 +12,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -32,8 +34,8 @@ class EventsViewModelTest {
     lateinit var repo: NetworkRepo
     @Mock
     lateinit var networkService: NetworkService
-    //@get:Rule
-    //val instantTaskExecutionRule = InstantTaskExecutionRule()
+    @get:Rule
+    val instantTaskExecutionRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {
