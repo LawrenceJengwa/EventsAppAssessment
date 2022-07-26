@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lawrence.eventsapp.R
 import com.lawrence.eventsapp.databinding.EventsItemBinding
+import com.lawrence.eventsapp.databinding.ScheduleItemBinding
 import com.lawrence.eventsapp.network.Schedule
 import com.lawrence.eventsapp.util.DateUtil
 import com.squareup.picasso.Picasso
@@ -14,7 +15,7 @@ class ScheduleAdapter(private var scheduleList: List<Schedule>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = EventsItemBinding.inflate(inflater, parent, false)
+        val binding = ScheduleItemBinding.inflate(inflater, parent, false)
         return ScheduleViewHolder(binding)
     }
 
@@ -28,22 +29,16 @@ class ScheduleAdapter(private var scheduleList: List<Schedule>) :
     }
 }
 
-class ScheduleViewHolder(private val binding: EventsItemBinding) :
+class ScheduleViewHolder(private val binding: ScheduleItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun display(schedule: Schedule) {
         binding.apply {
-            eventTitle.text = schedule.title
-            eventSubTitle.text = schedule.subTitle
-            val scheduleEventDate = schedule.date
-            if (scheduleEventDate != null && DateUtil.isToday(scheduleEventDate)) {
-                eventDate.text = "Today${DateUtil.extractTimeFromDate(scheduleEventDate)}"
-            } else {
-                eventDate.text = binding.eventDate.context.getString(R.string.yesterday)
-            }
+            scheduleTitle.text = schedule.title
+            scheduleSubTitle.text = schedule.subTitle
             Picasso.get()
                 .load(schedule.imageUrl)
                 .resize(20, 20)
-                .into(binding.eventImage)
+                .into(binding.scheduleImage)
         }
     }
 

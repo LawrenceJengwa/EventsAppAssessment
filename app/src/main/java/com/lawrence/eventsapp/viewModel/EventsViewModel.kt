@@ -1,5 +1,6 @@
 package com.lawrence.eventsapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lawrence.eventsapp.network.Events
@@ -22,6 +23,7 @@ class EventsViewModel constructor(private val repo: NetworkRepo): ViewModel() {
             withContext(Dispatchers.Main){
                 if (response.isSuccessful){
                     eventList.postValue(response.body())
+                    Log.d("EventsViewModel", "getAllEvents returned: " + response.body())
                     isLoading.value =false
                 } else{
                     onError("Error : ${response.message()}")

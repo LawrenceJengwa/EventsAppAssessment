@@ -1,5 +1,6 @@
 package com.lawrence.eventsapp.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lawrence.eventsapp.network.NetworkRepo
@@ -21,6 +22,7 @@ class ScheduleViewModel(private val repo: NetworkRepo) : ViewModel() {
             withContext(Dispatchers.Main){
                 if (response.isSuccessful){
                     scheduleList.postValue(response.body())
+                    Log.d("ScheduleViewModel", "getSchedule returned: " + response.body())
                     isLoading.value =false
                 } else{
                     onError("Error : ${response.message()}")
