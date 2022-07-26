@@ -13,19 +13,17 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.whenever
 import retrofit2.Response
 
 
 class ScheduleViewModelTest {
 
     @ExperimentalCoroutinesApi
-    @RunWith(AndroidJUnit4::class)
     class EventsViewModelTest {
 
         private val testDispatcher = TestCoroutineDispatcher()
@@ -51,7 +49,7 @@ class ScheduleViewModelTest {
         @Test
         fun `getSchedule test` () {
             runBlocking {
-                whenever(repo.getSchedule()).thenReturn(
+                `when`(repo.getSchedule()).thenReturn(
                     Response.success(listOf<Schedule>(
                         Schedule("1", "Liverpool v Porto",
                         "UEFA Champions League", "2022-07-24T01:17:34.757Z", "https://firebasestorage.googleapis.com/v0/b/dazn-recruitment/o/310176837169_image-header_pDach_1554579780000.jpeg?alt=media&token=1777d26b-d051-4b5f-87a8-7633d3d6dd20")

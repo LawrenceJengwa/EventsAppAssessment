@@ -23,7 +23,6 @@ import org.mockito.kotlin.whenever
 import retrofit2.Response
 
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
 class EventsViewModelTest {
 
     private val testDispatcher = TestCoroutineDispatcher()

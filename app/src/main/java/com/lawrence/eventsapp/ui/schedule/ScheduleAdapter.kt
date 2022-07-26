@@ -20,7 +20,7 @@ class ScheduleAdapter(private var scheduleList: List<Schedule>) :
 
     override fun onBindViewHolder(holder: ScheduleViewHolder, position: Int) {
         val event = scheduleList[position]
-        holder.display(event, position)
+        holder.display(event)
     }
 
     override fun getItemCount(): Int {
@@ -30,8 +30,10 @@ class ScheduleAdapter(private var scheduleList: List<Schedule>) :
 
 class ScheduleViewHolder(private val binding: EventsItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun display(schedule: Schedule, position: Int) {
+    fun display(schedule: Schedule) {
         binding.apply {
+            eventTitle.text = schedule.title
+            eventSubTitle.text = schedule.subTitle
             val scheduleEventDate = schedule.date
             if (scheduleEventDate != null && DateUtil.isToday(scheduleEventDate)) {
                 eventDate.text = "Today${DateUtil.extractTimeFromDate(scheduleEventDate)}"
