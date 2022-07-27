@@ -8,12 +8,6 @@ import kotlin.time.Duration.Companion.hours
 
 class DateUtil {
 
-    fun sortDate(date: String) {
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        sdf.parse(date)
-
-    }
-
     companion object {
         const val VIDEO_URL_KEY = "VIDEO_URL"
         private fun dateTimeToMills(date: String): Long? {
@@ -45,7 +39,9 @@ class DateUtil {
             try {
                 val date = simpleDateFormat.parse(date)
                 var calender = Calendar.getInstance()
-                calender.time = date
+                if (date != null) {
+                    calender.time = date
+                }
                 return ", " + calender.get(Calendar.HOUR_OF_DAY) + ":" + calender.get(Calendar.MINUTE)
             } catch (e: ParseException) {
                 e.printStackTrace()

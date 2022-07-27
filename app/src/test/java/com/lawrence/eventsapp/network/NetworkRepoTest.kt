@@ -1,14 +1,14 @@
 package com.lawrence.eventsapp.network
 
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 import retrofit2.Response
 
-@RunWith(JUnit4::class)
 class NetworkRepoTest {
 
     @Mock
@@ -16,17 +16,27 @@ class NetworkRepoTest {
     @Mock
     lateinit var networkService: NetworkService
 
-    @Test
-    suspend fun `getAllEvents should return list of events`() {
-        Mockito.`when`(networkService.getAllEvents()).thenReturn(Response.success(listOf()))
-        val response = repo.getAllEvents()
-        assertEquals(listOf<Events>(), response.body())
+    @Before
+    fun setup() {
+        MockitoAnnotations.openMocks(this)
+        repo = NetworkRepo(networkService)
     }
 
     @Test
-    suspend fun `getSchedule should return a schedule list` () {
-        Mockito.`when`(networkService.getSchedule()).thenReturn(Response.success(listOf()))
-        val response = repo.getSchedule()
-        assertEquals(listOf<Events>(), response.body())
+    fun `getAllEvents should return list of events`() {
+        runBlocking {
+            Mockito.`when`(networkService.getAllEvents()).thenReturn(Response.success(listOf()))
+            val response = repo.getAllEvents()
+            assertEquals(listOf<Events>(), response.body())
+        }
+    }
+
+    @Test
+    fun `getSchedule should return a schedule list` () {
+        runBlocking {
+            Mockito.`when`(networkService.getSchedule()).thenReturn(Response.success(listOf()))
+            val response = repo.getSchedule()
+            assertEquals(listOf<Events>(), response.body())
+        }
     }
 }

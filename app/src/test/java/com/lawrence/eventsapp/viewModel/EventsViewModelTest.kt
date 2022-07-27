@@ -9,8 +9,10 @@ import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.setMain
+import okhttp3.internal.wait
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +27,7 @@ import retrofit2.Response
 @ExperimentalCoroutinesApi
 class EventsViewModelTest {
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = StandardTestDispatcher()
 
     @Mock
     lateinit var eventsViewModel: EventsViewModel
@@ -38,9 +40,10 @@ class EventsViewModelTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(testDispatcher)
-        repo = mock(NetworkRepo::class.java)
+        //repo = mock(NetworkRepo::class.java)
+        repo = NetworkRepo(networkService)
         eventsViewModel = EventsViewModel(repo)
     }
 
@@ -52,7 +55,7 @@ class EventsViewModelTest {
                 "UEFA Champions League", "2022-07-24T01:17:34.757Z", "https://firebasestorage.googleapis.com/v0/b/dazn-recruitment/o/310176837169_image-header_pDach_1554579780000.jpeg?alt=media&token=1777d26b-d051-4b5f-87a8-7633d3d6dd20",
                 "https://firebasestorage.googleapis.com/v0/b/dazn-recruitment/o/promo.mp4?alt=media")
                 )))
-            val result = eventsViewModel.eventList.value
+            val result = eventsViewModel.eventList.value?.get(0)
             assertEquals(listOf<TestData>(), result)
         }
     }

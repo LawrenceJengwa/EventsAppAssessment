@@ -34,7 +34,12 @@ class ScheduleViewHolder(private val binding: ScheduleItemBinding) :
     fun display(schedule: Schedule) {
         binding.apply {
             scheduleTitle.text = schedule.title
-            scheduleSubTitle.text = schedule.subTitle
+            //scheduleDate.text = schedule.date
+            if (DateUtil.isToday(schedule.date)) {
+                scheduleDate.text = scheduleDate.context.getString(R.string.today)
+            } else {
+                scheduleDate.text = scheduleDate.context.getString(R.string.yesterday)
+            }
             Picasso.get()
                 .load(schedule.imageUrl)
                 .resize(20, 20)

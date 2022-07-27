@@ -41,7 +41,7 @@ class EventsViewHolder(private val binding: EventsItemBinding) :
             eventSubTitle.text = event.subtitle
             val dataEventDate = event.date
             if (dataEventDate != null && DateUtil.isToday(dataEventDate)) {
-                eventDate.text = "Today" + extractTimeFromDate(dataEventDate)
+                (eventDate.context.getString(R.string.today) + extractTimeFromDate(dataEventDate)).also { eventDate.text = it }
             } else {
                 eventDate.text = binding.eventDate.context.getString(R.string.yesterday)
             }
