@@ -22,6 +22,11 @@ class VideoPlayerActivity : AppCompatActivity() {
         exoPlayer = ExoPlayer.Builder(this).build()
         videoUrl = intent.extras?.getString(VIDEO_URL_KEY)!!
         prepareVideo(videoUrl)
+
+        binding.playerToolbar.subtitle = getString(R.string.video_player_title)
+        binding.playerToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun prepareVideo(url: String) {
